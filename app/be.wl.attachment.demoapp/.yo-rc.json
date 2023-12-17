@@ -1,0 +1,17 @@
+{
+  "generator-ui5-ts-app": {
+    "namespace": "be.wl.attachment.demoapp",
+    "framework": "OpenUI5",
+    "frameworkVersion": "1.119.1",
+    "author": "lemaiwo",
+    "initrepo": true,
+    "tstypes": "@openui5/types",
+    "tstypesVersion": "1.119.1",
+    "appId": "be.wl.attachment.demoapp",
+    "appURI": "be/wl/attachment/demoapp",
+    "cdnDomain": "sdk.openui5.org",
+    "defaultTheme": "sap_horizon",
+    "gte11150": true,
+    "setupCompleted": true
+  }
+}

@@ -1,0 +1,106 @@
+<mvc:View
+	controllerName="be.wl.attachment.demoapp.controller.Main"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:upload="sap.m.upload"
+	xmlns:form="sap.ui.layout.form">
+<f:DynamicPage showFooter="false">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{= ${ui>/editable}?${i18n>create}:${i18n>view}} {i18n>appTitle}"/>
+				</f:heading>
+				<f:actions>
+					<!--<Button type="Emphasized" text="{i18n>create}" press=".onSave" visible="{ui>/editable}" enabled="{= !!${ui>/response}}"/>-->
+					<Button type="Emphasized" text="{i18n>create}" press=".onSave" visible="{ui>/editable}" />
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<VBox>			
+				<form:Form id="bookForm" editable="true">
+					<form:layout>
+						<form:ResponsiveGridLayout
+							labelSpanXL="3"
+							labelSpanL="3"
+							labelSpanM="3"
+							labelSpanS="12"
+							adjustLabelSpan="false"
+							emptySpanXL="4"
+							emptySpanL="4"
+							emptySpanM="4"
+							emptySpanS="0"
+							columnsXL="1"
+							columnsL="1"
+							columnsM="1"
+							singleContainerFullSize="false" />
+					</form:layout>
+					<form:formContainers>
+						<form:FormContainer>
+							<form:formElements>
+								<form:FormElement label="Title" >
+									<form:fields>
+										<Input value="{title}"/>
+									</form:fields>
+								</form:FormElement>
+								<form:FormElement label="Stock">
+									<form:fields>
+										<Input type="Number" value="{stock}"/>
+									</form:fields>
+								</form:FormElement>
+							</form:formElements>
+						</form:FormContainer>
+					</form:formContainers>
+				</form:Form>
+								<!-- url="/comeliagroupehsincidentcreate/catalog/Attachments({ID})/content" -->
+				<upload:UploadSet
+						id="UploadSet"
+						instantUpload="false"
+						showIcons="false"
+						uploadEnabled="true"
+						terminationEnabled="false"
+						maxFileNameLength="30"
+						httpRequestMethod="Put"
+						uploadCompleted="onUploadCompleted"
+						items="{path: 'Attachments', templateShareable: false}">
+					<upload:items>
+						<upload:UploadSetItem
+								fileName="{fileName}"
+								mediaType="{mediaType}"
+								enableEdit="false"
+								visibleEdit="false"
+								url="/odata/v4/catalog/Attachments({ID})/content"
+								uploadState="Complete">
+						</upload:UploadSetItem>
+					</upload:items>
+				</upload:UploadSet>
+				<List items="{/Books}" headerText="Books">
+					<CustomListItem>
+						<VBox >
+							<Title text="{title} - {stock}"></Title>
+							<VBox items="{Attachments}">
+								<Link text="Download: {fileName}" href="/odata/v4/catalog/Attachments({ID})/content" target="_blank"></Link>
+							</VBox>
+						</VBox>
+					</CustomListItem>
+				</List>
+			</VBox>
+		</f:content>
+		 <f:footer>
+			<OverflowToolbar>
+                <Button
+                    icon="sap-icon://alert"
+                    text="{=${message>/}.length}"
+                    visible="{=${message>/}.length > 0}"
+                    type="Emphasized"
+                    press=".onMessagePopoverPress">
+                </Button>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="{i18n>create}" press=".onSave"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

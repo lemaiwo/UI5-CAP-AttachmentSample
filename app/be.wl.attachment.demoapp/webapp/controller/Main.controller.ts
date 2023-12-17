@@ -15,7 +15,7 @@ export default class Main extends BaseController {
 	private bookContext: Context;
 	private attachBinding: ODataListBinding;
 	private filesToBeUploaded: number;
-	private filesUploadFinished:number;
+	private filesUploadFinished: number;
 	public onInit(): void {
 
 		const messageManager = sap.ui.getCore().getMessageManager();
@@ -67,20 +67,20 @@ export default class Main extends BaseController {
 		const attaResult = attaContext.getObject() as { ID: string };
 		// Upload url will be different in the deployad version. The upload url always needs to be the full path
 		let baseUrl = sap.ui.require.toUrl("be/wl/attachment/demoapp");
-		if (window.location.hostname === "localhost") { 
+		if (window.location.hostname === "localhost") {
 			baseUrl = ""; // for local testing
 		}
 		file.setUploadUrl(`${baseUrl}/odata/v4/catalog/Attachments(${attaResult.ID})/content`);
 		return attaResult;
 	}
 	public onUploadCompleted(event: Event) {
-		this.bookCreatedSuccessful();
-	}
-	public async bookCreatedSuccessful() {
 		this.filesUploadFinished++;
 		if (this.filesToBeUploaded === this.filesUploadFinished) {
-			MessageBox.success(`Book created: ${this.bookContext.getProperty("ID")}`);
-			this.getModel().refresh();
+			this.bookCreatedSuccessful();
 		}
+	}
+	public async bookCreatedSuccessful() {
+		MessageBox.success(`Book created: ${this.bookContext.getProperty("ID")}`);
+		this.getModel().refresh();
 	}
 }
